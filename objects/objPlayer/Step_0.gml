@@ -1,9 +1,18 @@
 switch (state){
 	case "IDLE":
 		sprite_index = sprPlayerIDLE;
+		image_speed = 1;
 		break;
 	case "WALK":
 		sprite_index = sprPlayerWALK;
+		image_speed = 1;
+		break;
+	case "LOAD":
+		sprite_index = sprPlayerLOAD;
+		image_speed = 1;
+		break;
+	case "LOADIDLE":
+		image_speed = 0;
 		break;
 }
 
@@ -14,16 +23,19 @@ var moveRelease = keyboard_check_released(vk_right) or keyboard_check_released(v
 
 if (moveRight){ 
 	x += mySpeed;
-	state = "WALK";
+	if (state == "WALK")or(state == "IDLE"){state = "WALK";}
+	if (state == "LOAD") or (state == "LOADIDLE"){state = "LOAD";}
 	image_xscale = 1;
 	}
 if (moveLeft){
 	x -= mySpeed;
-	state = "WALK";
+	if (state == "WALK")or(state == "IDLE"){state = "WALK";}
+	if (state == "LOAD")or(state == "LOADIDLE"){state = "LOAD";}
 	image_xscale = -1;
 	}
 if (moveRelease){
-	state = "IDLE"
+	if (state == "LOAD"){state = "LOADIDLE"}
+	if (state == "WALK"){state = "IDLE"}
 	speed = 0;
 	}
 	
@@ -35,3 +47,13 @@ if distance_to_object(obj_Interactive) <= 10{
 	
 	}
 else{interaction = false;}
+
+if keyboard_check_pressed(vk_space) && interaction == true{
+	state = "LOAD";
+	mySpeed = 2.5;
+}
+if keyboard_check_pressed(vk_space) && (interaction == false){
+	if (state == "LOAD") or (state == "LOADIDLE"){
+		state = "IDLE";
+	}
+}
