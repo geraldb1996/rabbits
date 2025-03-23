@@ -1,0 +1,1 @@
+if instance_number(obj_interactionTop) >= 2 {instance_destroy()}

@@ -17,14 +17,21 @@ if (moveRight){
 	state = "WALK";
 	image_xscale = 1;
 	}
-
 if (moveLeft){
 	x -= mySpeed;
 	state = "WALK";
 	image_xscale = -1;
 	}
-	
 if (moveRelease){
 	state = "IDLE"
 	speed = 0;
 	}
+	
+if distance_to_object(obj_Interactive) <= 10{
+	interaction = true;
+	if instance_number(obj_interactionTop) <= 0{
+		instance_create_depth(x, y-66, 1, obj_interactionTop);
+	}/*End of instance count*/
+	
+	}
+else{interaction = false;}
